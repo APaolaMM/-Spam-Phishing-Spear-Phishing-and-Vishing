@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="stylesheet.css" />
+  <title>Spam, Phishing, Spear Phishing and Vishing</title>
+
+</head>
+
+<body>
+	<div class="video">
+	<video controls autoplay width="640" height="480">
+		<source src="Módulo 3_Spam, Phishing, Spear Phishing and Vishing.mp4" type="video/mp4" />
+	</video>
+</div>
+    <div class="preguntasportema"> 
+<fieldset>
+	<legend>Cuestionario Spam, Phishing, Spear Phishing and Vishing</legend>
+	<div id="test">
+		<div class="cuestion">1. “La persona ciberatacante utiliza habilidades sociales para generar confianza en la v&iacute;ctima, de tal forma que obtenga la informaci&oacute;n que necesita sobre una organizaci&oacute;n o sistema inform&aacute;tico”. La definici&oacute;n anterior corresponde a:</div>
+		<div class="respuestas">
+			<label>
+				<input type="radio" name="0" value="a">&nbsp;a : DDoS.&nbsp;</label>
+			<label>
+				<input type="radio" name="0" value="b">&nbsp;b : Intrusi&oacute;n. &nbsp;</label>
+			<label>
+				<input type="radio" name="0" value="c">&nbsp;c : Ingenier&iacute;a Social. &nbsp;</label>
+		</div>
+		<div class="cuestion">2. “Se utilizan correos electr&oacute;nicos o sitios web maliciosos para obtener informaci&oacute;n, suplantando la identidad de una persona u organizaci&oacute;n confiable”. La definici&oacute;n anterior corresponde a:</div>
+		<div class="respuestas">
+			<label>
+				<input type="radio" name="1" value="a">&nbsp;a : Phishing.&nbsp;</label>
+			<label>
+				<input type="radio" name="1" value="b">&nbsp;b : Vishing.&nbsp;</label>
+			<label>
+				<input type="radio" name="1" value="c">&nbsp;c : Smishing.&nbsp;</label>
+		</div>
+		<div class="cuestion">3. “Env&iacute;a SMS con p&aacute;ginas web, direcciones de correo o n&uacute;meros de tel&eacute;fono que, al hacer clic, abre autom&aacute;ticamente el malware”. La definici&oacute;n anterior corresponde a:</div>
+		<div class="respuestas">
+			<label>
+				<input type="radio" name="1" value="a">&nbsp;a : Phishing.&nbsp;</label>
+			<label>
+				<input type="radio" name="1" value="b">&nbsp;b : Vishing.&nbsp;</label>
+			<label>
+				<input type="radio" name="1" value="c">&nbsp;c : Smishing.&nbsp;</label>
+		</div>
+	</div>
+	<button id="boton">Mostrar resultado</button>
+	<div id="resultado">
+		<br>
+	</div>
+	<script>
+		const contenedor = document.getElementById("test");
+		const botonRes = document.getElementById("boton");
+		const resultadoTest = document.getElementById("resultado");
+
+		const preguntas = [
+			{
+				pregunta: "1. “La persona ciberatacante utiliza habilidades sociales para generar confianza en la víctima, de tal forma que obtenga la información que necesita sobre una organización o sistema informático”. La definición anterior corresponde a:",
+				respuestas:
+				{
+					a: "DDoS.",
+					b: "Intrusión.",
+					c: "Ingeniería Social.",
+				},
+				respuestaCorrecta: "c",
+			},
+			{
+				pregunta: "2. “Se utilizan correos electrónicos o sitios web maliciosos para obtener información, suplantando la identidad de una persona u organización confiable”. La definición anterior corresponde a:",
+				respuestas:
+				{
+					a: "Phishing.",
+					b: "Vishing.",
+					c: "Smishing.",
+				},
+				respuestaCorrecta: "a",
+			},
+			{
+				pregunta: "3. “Envía SMS con páginas web, direcciones de correo o números de teléfono que, al hacer clic, abre automáticamente el malware”. La definición anterior corresponde a:",
+				respuestas:
+				{
+					a: "Phishing.",
+					b: "Vishing.",
+					c: "Smishing.",
+				},
+				respuestaCorrecta: "c",
+			},
+
+		];
+
+		function mostrarTest()
+		{
+			const preguntasYrespuestas = [];
+
+			preguntas.forEach((preguntaActual, numeroDePregunta) =>
+			{
+
+				const respuestas = [];
+
+				for (letraRespuesta in preguntaActual.respuestas)
+				{
+
+					respuestas.push(
+
+						`
+        <label>
+                  <input type="radio" name="${numeroDePregunta}" value="${letraRespuesta}" />
+                  ${letraRespuesta} : ${preguntaActual.respuestas[letraRespuesta]} <br>
+              </label>` 
+					);
+                   
+				}
+
+				preguntasYrespuestas.push(
+					`
+      <div class="cuestion">${preguntaActual.pregunta}</div>
+      
+          <div class="respuestas"> ${respuestas.join("")} </div>
+          `
+				);
+			});
+
+			contenedor.innerHTML = preguntasYrespuestas.join("");
+		}
+
+		mostrarTest();
+
+		function mostrarResultado()
+		{
+			const respuestas = contenedor.querySelectorAll(".respuestas");
+			let respuestasCorrectas = 0;
+
+			preguntas.forEach((preguntaActual, numeroDePregunta) =>
+			{
+				const todasLasRespuestas = respuestas[numeroDePregunta];
+				const checkboxRespuestas = `input[name='${numeroDePregunta}']:checked`;
+				const respuestaElegida = (
+					todasLasRespuestas.querySelector(checkboxRespuestas) ||
+					{}
+				).value;
+
+				if (respuestaElegida === preguntaActual.respuestaCorrecta)
+				{
+					respuestasCorrectas++;
+
+					respuestas[numeroDePregunta].style.color = "blue";
+				}
+				else
+				{
+					respuestas[numeroDePregunta].style.color = "red";
+				}
+			});
+
+			resultadoTest.innerHTML =
+				"Usted ha acertado " +
+				respuestasCorrectas +
+				" preguntas de un total de " +
+				preguntas.length;
+		}
+
+		botonRes.addEventListener("click", mostrarResultado);
+
+	</script>
+       </div>
+
+</fieldset>
+</body>
+</html>
